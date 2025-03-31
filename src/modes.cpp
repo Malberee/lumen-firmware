@@ -3,8 +3,8 @@
 
 bool isOff = false;
 CRGB leds[NUM_LEDS];
-BaseMode *modes[] = {&solid, &fade, &snake, &doubleSnake};
-Mode currentMode = DOUBLE_SNAKE;
+BaseMode *modes[] = {&solid, &fade, &snake, &doubleSnake, &fill, &doubleFill};
+Mode currentMode = DOUBLE_FILL;
 
 void setCurrentMode(Mode mode)
 {

@@ -31,6 +31,8 @@ extern Mode currentMode;
 #include "modes/solid.h"
 #include "modes/snake.h"
 #include "modes/double-snake.h"
+#include "modes/fill.h"
+#include "modes/double-fill.h"
 
 void setCurrentMode(Mode mode);
 void tick();
