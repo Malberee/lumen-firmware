@@ -1,12 +1,16 @@
-#include <Arduino.h>
+#include "config.h"
+#include "modes.h"
 
-void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
+void setup()
+{
+  Serial.begin(115200);
+
+  FastLED.addLeds<NEOPIXEL, PIN>(leds, NUM_LEDS);
+  FastLED.setBrightness(10);
+  modes[currentMode]->initial();
 }
 
-void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);            
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
+void loop()
+{
+  tick();
 }
