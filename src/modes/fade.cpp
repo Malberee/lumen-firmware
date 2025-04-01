@@ -28,11 +28,11 @@ void Fade::tick()
     if (increase)
     {
 
-        brightness += 1;
+        brightness++;
     }
     else
     {
-        brightness -= 1;
+        brightness--;
     }
 
     float scale = brightness / MAX_BRIGHTNESS;

@@ -33,6 +33,7 @@ extern Mode currentMode;
 #include "modes/double-snake.h"
 #include "modes/fill.h"
 #include "modes/double-fill.h"
+#include "modes/chroma.h"
 
 void setCurrentMode(Mode mode);
 void tick();

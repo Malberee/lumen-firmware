@@ -3,8 +3,8 @@
 
 bool isOff = false;
 CRGB leds[NUM_LEDS];
-BaseMode *modes[] = {&solid, &fade, &snake, &doubleSnake, &fill, &doubleFill};
-Mode currentMode = DOUBLE_FILL;
+BaseMode *modes[] = {&solid, &fade, &snake, &doubleSnake, &fill, &doubleFill, &chroma};
+Mode currentMode = CHROMA;
 
 void setCurrentMode(Mode mode)
 {
@@ -17,7 +17,9 @@ void tick()
 {
     if (currentMode != SOLID || isOff)
     {
-        EVERY_N_MILLISECONDS_DYNAMIC(currentMode == FADE ? params.getSpeed() / 10 : params.getSpeed())
+        bool increaseSpeed = currentMode == FADE || currentMode == CHROMA;
+
+        EVERY_N_MILLISECONDS_DYNAMIC(params.getSpeed() / (increaseSpeed ? 50 : 1))
         {
             modes[currentMode]->tick();
             FastLED.show();
