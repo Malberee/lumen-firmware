@@ -34,6 +34,7 @@ extern Mode currentMode;
 #include "modes/fill.h"
 #include "modes/double-fill.h"
 #include "modes/chroma.h"
+#include "modes/rainbow.h"
 
 void setCurrentMode(Mode mode);
 void tick();

@@ -3,8 +3,8 @@
 
 bool isOff = false;
 CRGB leds[NUM_LEDS];
-BaseMode *modes[] = {&solid, &fade, &snake, &doubleSnake, &fill, &doubleFill, &chroma};
-Mode currentMode = CHROMA;
+BaseMode *modes[] = {&solid, &fade, &snake, &doubleSnake, &fill, &doubleFill, &chroma, &rainbow};
+Mode currentMode = RAINBOW;
 
 void setCurrentMode(Mode mode)
 {
@@ -17,7 +17,7 @@ void tick()
 {
     if (currentMode != SOLID || isOff)
     {
-        bool increaseSpeed = currentMode == FADE || currentMode == CHROMA;
+        bool increaseSpeed = currentMode == FADE || currentMode == CHROMA || currentMode == RAINBOW;
 
         EVERY_N_MILLISECONDS_DYNAMIC(params.getSpeed() / (increaseSpeed ? 50 : 1))
         {
