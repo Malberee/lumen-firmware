@@ -6,6 +6,7 @@ enum Mode
 {
     SOLID,
     FADE,
+    CAROUSEL,
     SNAKE,
     DOUBLE_SNAKE,
     FILL,
@@ -28,6 +29,7 @@ extern BaseMode *modes[];
 extern Mode currentMode;
 
 #include "modes/fade.h"
+#include "modes/carousel.h"
 #include "modes/solid.h"
 #include "modes/snake.h"
 #include "modes/double-snake.h"

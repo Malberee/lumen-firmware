@@ -3,8 +3,8 @@
 
 bool isOff = false;
 CRGB leds[NUM_LEDS];
-BaseMode *modes[] = {&solid, &fade, &snake, &doubleSnake, &fill, &doubleFill, &chroma, &rainbow};
-Mode currentMode = RAINBOW;
+BaseMode *modes[] = {&solid, &fade, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chroma, &rainbow};
+Mode currentMode = CAROUSEL;
 
 void setCurrentMode(Mode mode)
 {
