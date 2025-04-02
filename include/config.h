@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 #include <FastLED.h>
+#include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
 
 #define NUM_LEDS 24
 #define PIN 4
