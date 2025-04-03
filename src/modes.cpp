@@ -1,7 +1,6 @@
 #include "modes.h"
 #include "params.h"
 
-bool isOff = false;
 CRGB leds[NUM_LEDS];
 BaseMode *modes[] = {&solid, &fade, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chroma, &rainbow};
 Mode currentMode = SOLID;
@@ -10,12 +9,15 @@ void setCurrentMode(Mode mode)
 {
     currentMode = mode;
     modes[currentMode]->initial();
-    FastLED.show();
+    if (params.getPower())
+    {
+        FastLED.show();
+    }
 }
 
 void tick()
 {
-    if (currentMode != SOLID || isOff)
+    if (currentMode != SOLID && params.getPower())
     {
         bool increaseSpeed = currentMode == FADE || currentMode == CHROMA || currentMode == RAINBOW;
 

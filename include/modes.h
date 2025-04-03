@@ -23,7 +23,6 @@ public:
     virtual ~BaseMode() = default;
 };
 
-extern bool isOff;
 extern CRGB leds[NUM_LEDS];
 extern BaseMode *modes[];
 extern Mode currentMode;

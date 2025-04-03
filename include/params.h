@@ -13,7 +13,7 @@ class Params
     Colors colors;
     uint16_t speed;
     byte length;
-
+    bool power;
 public:
     Params();
 
@@ -26,6 +26,9 @@ public:
 
     byte getLength();
     void setLength(byte length);
+
+    bool getPower();
+    void setPower(bool power);
 };
 
 extern Params params;
