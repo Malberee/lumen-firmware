@@ -1,13 +1,17 @@
 #include "modes.h"
 #include "params.h"
+#include "utils.h"
 
 CRGB leds[NUM_LEDS];
 BaseMode *modes[] = {&solid, &fade, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chroma, &rainbow};
 Mode currentMode = SOLID;
 
-void setCurrentMode(Mode mode)
+void setCurrentMode(char *mode)
 {
-    currentMode = mode;
+    const char *modeNames[] = {"solid", "fade", "carousel", "snake", "double-snake", "fill", "double-fill", "chroma", "rainbow"};
+    byte index = findIndex(modeNames, sizeof(modeNames), mode);
+
+    currentMode = static_cast<Mode>(index);
     modes[currentMode]->initial();
     if (params.getPower())
     {

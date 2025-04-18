@@ -13,7 +13,7 @@ void onError(const char *error)
     udp.endPacket();
 
     blink(ERROR_COLOR, 2);
-    setCurrentMode(SOLID);
+    setCurrentMode("solid");
     WiFi.mode(WIFI_AP);
 }
 
@@ -26,14 +26,14 @@ void onConnect()
     udp.endPacket();
 
     blink(SUCCESS_COLOR, 2);
-    setCurrentMode(SOLID);
+    setCurrentMode("solid");
     WiFi.mode(WIFI_STA);
 }
 
 void connectToWiFi(const char *ssid, const char *password)
 {
     isConnecting = true;
-    setCurrentMode(FADE);
+    setCurrentMode("fade");
     WiFi.mode(WIFI_AP_STA);
     WiFi.begin(ssid, password);
 }

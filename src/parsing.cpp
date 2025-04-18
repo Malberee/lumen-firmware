@@ -1,6 +1,7 @@
 #include "parsing.h"
 #include "wifi.h"
 #include "params.h"
+#include "blink.h"
 
 WiFiUDP udp;
 char packetBuffer[255];
@@ -45,8 +46,8 @@ void parseParams(char *key, char *value)
     {
         for (int i = 0; i < count; i++)
         {
-            if (!strcmp(parsedPtrs[i][0], "mode"))
-                setCurrentMode(static_cast<Mode>(atoi(parsedPtrs[i][1])));
+            if (!strcmp(parsedPtrs[i][0], "name"))
+                setCurrentMode(parsedPtrs[i][1]);
             else if (!strcmp(parsedPtrs[i][0], "pri"))
                 params.setPrimary(parsedPtrs[i][1]);
             else if (!strcmp(parsedPtrs[i][0], "sec"))
@@ -75,7 +76,16 @@ void parseUDP()
         int n = udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
         packetBuffer[n] = 0;
 
-        if (!strcmp(packetBuffer, "P_OFF"))
+        Serial.println(packetBuffer);
+
+        if (!strcmp(packetBuffer, "CONNECT"))
+        {
+            blink(SUCCESS_COLOR, 2);
+            udp.beginPacket(udp.remoteIP(), 8888);
+            udp.write("OK");
+            udp.endPacket();
+        }
+        else if (!strcmp(packetBuffer, "P_OFF"))
         {
             params.setPower(false);
         }
