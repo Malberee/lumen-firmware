@@ -30,3 +30,12 @@ CRGB hexToCRGB(const char *hex)
   sscanf(hex, "%02x%02x%02x", &r, &g, &b);
   return CRGB(r, g, b);
 }
+
+byte findIndex(const char* arr[], byte size, const char* target) {
+    for (byte i = 0; i < size; ++i) {
+        if (strcmp(arr[i], target) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
