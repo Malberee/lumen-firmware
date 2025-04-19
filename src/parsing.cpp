@@ -63,6 +63,7 @@ void parseParams(char *key, char *value)
         if (params.getPower())
         {
             FastLED.show();
+            FastLED.show(); // for some unknown reason color change does not work after the first call 🤷‍♂️
         }
     }
 };
