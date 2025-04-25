@@ -6,6 +6,8 @@ CRGB leds[NUM_LEDS];
 BaseMode *modes[] = {&solid, &fade, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chroma, &rainbow};
 Mode currentMode = SOLID;
 
+unsigned long lastTime = 0;
+
 void setCurrentMode(char *mode)
 {
     const char *modeNames[] = {"solid", "fade", "carousel", "snake", "double-snake", "fill", "double-fill", "chroma", "rainbow"};
@@ -25,8 +27,9 @@ void tick()
     {
         bool increaseSpeed = currentMode == FADE || currentMode == CHROMA || currentMode == RAINBOW;
 
-        EVERY_N_MILLISECONDS_DYNAMIC(params.getSpeed() / (increaseSpeed ? 50 : 1))
+        if (millis() - lastTime > (params.getSpeed() / (increaseSpeed ? 50 : 1)))
         {
+            lastTime = millis();
             modes[currentMode]->tick();
             FastLED.show();
         }

@@ -37,5 +37,7 @@ extern Mode currentMode;
 #include "modes/chroma.h"
 #include "modes/rainbow.h"
 
+extern unsigned long lastTime;
+
 void setCurrentMode(char *mode);
 void tick();
