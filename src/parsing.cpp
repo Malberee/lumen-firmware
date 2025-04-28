@@ -74,7 +74,7 @@ void parseUDP()
 
     if (packetSize)
     {
-        int n = udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
+        int n = udp.read(packetBuffer, 255);
         packetBuffer[n] = 0;
 
         Serial.println(packetBuffer);

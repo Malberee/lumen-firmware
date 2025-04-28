@@ -6,7 +6,7 @@
 #include <WiFiUdp.h>
 
 #define NUM_LEDS 24
-#define PIN 4
+#define PIN 12
 
 #define AP_SSID "NodeMCU Lumen"
 #define AP_PASSWORD "12345678"
