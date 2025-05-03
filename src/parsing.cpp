@@ -59,12 +59,7 @@ void parseParams(char *key, char *value)
             else if (!strcmp(parsedPtrs[i][0], "bri"))
                 FastLED.setBrightness(atoi(parsedPtrs[i][1]));
         }
-        modes[currentMode]->initial();
-        if (params.getPower())
-        {
-            FastLED.show();
-            FastLED.show(); // for some unknown reason color change does not work after the first call 🤷‍♂️
-        }
+        showCurrentMode();
     }
 };
 

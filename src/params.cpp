@@ -1,4 +1,5 @@
 #include "params.h"
+#include "modes.h"
 
 Params::Params()
 {
@@ -51,8 +52,7 @@ void Params::setPower(bool power)
 
     if (power)
     {
-        modes[currentMode]->initial();
-        FastLED.show();
+        showCurrentMode();
     }
     else
     {

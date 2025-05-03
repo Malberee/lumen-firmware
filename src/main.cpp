@@ -16,8 +16,7 @@ void setup()
   FastLED.addLeds<NEOPIXEL, PIN>(leds, NUM_LEDS);
   FastLED.setBrightness(10);
   blink(NEUTRAL_COLOR, 2);
-  modes[currentMode]->initial();
-  FastLED.show();
+  showCurrentMode();
 }
 
 void loop()

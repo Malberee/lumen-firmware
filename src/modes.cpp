@@ -14,10 +14,16 @@ void setCurrentMode(char *mode)
     byte index = findIndex(modeNames, sizeof(modeNames), mode);
 
     currentMode = static_cast<Mode>(index);
+    showCurrentMode();
+}
+
+void showCurrentMode()
+{
     modes[currentMode]->initial();
     if (params.getPower())
     {
         FastLED.show();
+        FastLED.show(); // for some unknown reason color change does not work after the first call 🤷‍♂️
     }
 }
 
