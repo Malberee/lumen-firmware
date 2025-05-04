@@ -74,12 +74,16 @@ void parseUDP()
 
         Serial.println(packetBuffer);
 
-        if (!strcmp(packetBuffer, "CONNECT"))
+        if (!strcmp(packetBuffer, "CNT"))
         {
             blink(SUCCESS_COLOR, 2);
             udp.beginPacket(udp.remoteIP(), 8888);
             udp.write("OK");
             udp.endPacket();
+        }
+        else if (!strcmp(packetBuffer, "DSCNT"))
+        {
+            ESP.restart();
         }
         else if (!strcmp(packetBuffer, "P_OFF"))
         {

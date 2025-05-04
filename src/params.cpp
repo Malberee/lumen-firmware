@@ -56,7 +56,7 @@ void Params::setPower(bool power)
     }
     else
     {
-        FastLED.clear();
+        FastLED.clear(true);
         FastLED.show();
     }
 }
