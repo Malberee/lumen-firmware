@@ -31,7 +31,7 @@ CRGB hexToCRGB(const char *hex)
   return CRGB(r, g, b);
 }
 
-byte findIndex(const char* arr[], byte size, const char* target) {
+int8_t findIndex(const char* arr[], int8_t size, const char* target) {
     for (byte i = 0; i < size; ++i) {
         if (strcmp(arr[i], target) == 0) {
             return i;

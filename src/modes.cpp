@@ -10,8 +10,10 @@ unsigned long lastTime = 0;
 
 void setCurrentMode(char *mode)
 {
-    const char *modeNames[] = {"solid", "fade", "carousel", "snake", "double-snake", "fill", "double-fill", "chroma", "rainbow"};
-    byte index = findIndex(modeNames, sizeof(modeNames), mode);
+    const char *modeNames[] = {"solid", "fade", "carousel", "snake", "double-snake", "fill", "double-fill", "chrome", "rainbow"};
+    int8_t index = findIndex(modeNames, sizeof(modeNames), mode);
+    
+    if (index < 0) return;
 
     currentMode = static_cast<Mode>(index);
     showCurrentMode();

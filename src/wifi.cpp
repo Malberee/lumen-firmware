@@ -1,6 +1,7 @@
 #include "wifi.h"
 #include "blink.h"
 #include "parsing.h"
+#include "websocket.h"
 
 bool isConnecting = false;
 
@@ -8,9 +9,7 @@ void onError(const char *error)
 {
     isConnecting = false;
 
-    udp.beginPacket(udp.remoteIP(), 8888);
-    udp.write(error);
-    udp.endPacket();
+    ws.sendTXT(activeClient, error);
 
     blink(ERROR_COLOR, 2);
     setCurrentMode("solid");
@@ -21,9 +20,7 @@ void onConnect()
 {
     isConnecting = false;
 
-    udp.beginPacket(udp.remoteIP(), 8888);
-    udp.write(WiFi.localIP().toString().c_str());
-    udp.endPacket();
+    ws.sendTXT(activeClient, WiFi.localIP().toString().c_str());
 
     blink(SUCCESS_COLOR, 2);
     setCurrentMode("solid");

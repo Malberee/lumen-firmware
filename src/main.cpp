@@ -3,6 +3,7 @@
 #include "parsing.h"
 #include "wifi.h"
 #include "blink.h"
+#include "websocket.h"
 
 void setup()
 {
@@ -11,7 +12,8 @@ void setup()
   WiFi.mode(WIFI_AP);
   WiFi.softAP(AP_SSID, AP_PASSWORD);
 
-  udp.begin(8888);
+  ws.begin();
+  ws.onEvent(onWebSocketEvent);
 
   FastLED.addLeds<NEOPIXEL, PIN>(leds, NUM_LEDS);
   FastLED.setBrightness(10);
@@ -22,7 +24,7 @@ void setup()
 void loop()
 {
   tick();
-  parseUDP();
+  ws.loop();
   if (isConnecting)
   {
     tickConnection();

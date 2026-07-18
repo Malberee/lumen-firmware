@@ -3,9 +3,6 @@
 #include "params.h"
 #include "blink.h"
 
-WiFiUDP udp;
-char packetBuffer[255];
-
 int split(char *str, char *ptrs[], char delimiter)
 {
     int count = 0;
@@ -63,47 +60,32 @@ void parseParams(char *key, char *value)
     }
 };
 
-void parseUDP()
+void parseMessage(uint8_t clientId, char* message)
 {
-    int packetSize = udp.parsePacket();
-
-    if (packetSize)
-    {
-        int n = udp.read(packetBuffer, 255);
-        packetBuffer[n] = 0;
-
-        Serial.println(packetBuffer);
-
-        if (!strcmp(packetBuffer, "CNT"))
-        {
-            blink(SUCCESS_COLOR, 2);
-            udp.beginPacket(udp.remoteIP(), 8888);
-            udp.write("OK");
-            udp.endPacket();
-        }
-        else if (!strcmp(packetBuffer, "DSCNT"))
+        Serial.println(message);
+        
+        if (!strcmp(message, "DSCNT"))
         {
             ESP.restart();
         }
-        else if (!strcmp(packetBuffer, "P_OFF"))
+        else if (!strcmp(message, "P_OFF"))
         {
             params.setPower(false);
         }
-        else if (!strcmp(packetBuffer, "P_ON"))
+        else if (!strcmp(message, "P_ON"))
         {
             params.setPower(true);
         }
         else
         {
-            char *key = packetBuffer;
-            char *value = strchr(packetBuffer, ' ');
+            char *key = message;
+            char *value = strchr(message, ' ');
             if (value)
             {
-                *value = 0;
+                *value = '\0';
                 value++;
 
                 parseParams(key, value);
             }
         }
-    }
 }

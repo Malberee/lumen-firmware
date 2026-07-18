@@ -3,12 +3,12 @@
 #include <Arduino.h>
 #include <FastLED.h>
 #include <ESP8266WiFi.h>
-#include <WiFiUdp.h>
+#include <WebSocketsServer.h>
 
 #define NUM_LEDS 24
 #define PIN 12
 
-#define AP_SSID "NodeMCU Lumen"
+#define AP_SSID "Lumen"
 #define AP_PASSWORD "12345678"
 
 constexpr CRGB NEUTRAL_COLOR = CRGB(0, 111, 238);
