@@ -4,34 +4,65 @@
 #include "websocket.h"
 
 bool isConnecting = false;
+static Mode lastMode = currentMode;
+
+static void sendLocalIpToActiveClient()
+{
+    IPAddress ip = WiFi.localIP();
+    char ipText[16];
+    snprintf(
+        ipText,
+        sizeof(ipText),
+        "%u.%u.%u.%u",
+        ip[0],
+        ip[1],
+        ip[2],
+        ip[3]);
+
+    Serial.println(ipText);
+
+    sendToActiveClient(ipText);
+}
 
 void onError(const char *error)
 {
     isConnecting = false;
 
-    ws.sendTXT(activeClient, error);
+    sendToActiveClient(error);
 
     blink(ERROR_COLOR, 2);
-    setCurrentMode("solid");
+    showCurrentMode();
     WiFi.mode(WIFI_AP);
 }
 
 void onConnect()
 {
-    isConnecting = false;
 
-    ws.sendTXT(activeClient, WiFi.localIP().toString().c_str());
+    isConnecting = false;
+    currentMode = static_cast<Mode>(lastMode);
+
+    sendLocalIpToActiveClient();
 
     blink(SUCCESS_COLOR, 2);
-    setCurrentMode("solid");
+    showCurrentMode();
+
     WiFi.mode(WIFI_STA);
 }
 
 void connectToWiFi(const char *ssid, const char *password)
 {
+    if (!ssid || !password)
+    {
+        return;
+    }
+
     isConnecting = true;
+    lastMode = currentMode;
+
     setCurrentMode("fade");
+
     WiFi.mode(WIFI_AP_STA);
+    WiFi.disconnect();
     WiFi.begin(ssid, password);
 }
 

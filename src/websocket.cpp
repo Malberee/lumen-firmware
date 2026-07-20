@@ -5,6 +5,21 @@
 WebSocketsServer ws(80);
 int8_t activeClient = -1;
 
+static bool hasActiveClient()
+{
+    return activeClient >= 0 && ws.clientIsConnected(static_cast<uint8_t>(activeClient));
+}
+
+void sendToActiveClient(const char *message)
+{
+    if (!hasActiveClient())
+    {
+        return;
+    }
+
+    ws.sendTXT(activeClient, message);
+}
+
 void onWebSocketEvent(
     uint8_t clientId,
     WStype_t type,
@@ -22,20 +37,31 @@ void onWebSocketEvent(
 
         activeClient = clientId;
 
-        blink(SUCCESS_COLOR, 2);
         Serial.println("Client connected");
 
         break;
     }
 
     case WStype_DISCONNECTED:
+        if (activeClient == clientId)
+        {
+            activeClient = -1;
+        }
         Serial.println("Client Disconnected");
         break;
 
     case WStype_TEXT:
     {
-        payload[length] = '\0';
-        parseMessage(clientId, (char *)payload);
+        if (length == 0 || length > MAX_MESSAGE_LENGTH)
+        {
+            Serial.println("Rejected oversized or empty message");
+            break;
+        }
+
+        char message[MAX_MESSAGE_LENGTH + 1];
+        memcpy(message, payload, length);
+        message[length] = '\0';
+        parseMessage(message);
         break;
     }
 
