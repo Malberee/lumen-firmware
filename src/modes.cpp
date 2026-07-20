@@ -8,10 +8,10 @@ Mode currentMode = SOLID;
 
 unsigned long lastTime = 0;
 
-void setCurrentMode(char *mode)
+void setCurrentMode(const char *mode)
 {
     const char *modeNames[] = {"solid", "fade", "carousel", "snake", "double-snake", "fill", "double-fill", "chrome", "rainbow"};
-    int8_t index = findIndex(modeNames, sizeof(modeNames), mode);
+    int8_t index = findIndex(modeNames, sizeof(modeNames) / sizeof(modeNames[0]), mode);
     
     if (index < 0) return;
 
@@ -35,7 +35,13 @@ void tick()
     {
         bool increaseSpeed = currentMode == FADE || currentMode == CHROMA || currentMode == RAINBOW;
 
-        if (millis() - lastTime > (params.getSpeed() / (increaseSpeed ? 50 : 1)))
+        uint16_t interval = params.getSpeed() / (increaseSpeed ? 50 : 1);
+        if (interval == 0)
+        {
+            interval = 1;
+        }
+
+        if (millis() - lastTime > interval)
         {
             lastTime = millis();
             modes[currentMode]->tick();

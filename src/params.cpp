@@ -17,11 +17,24 @@ Colors Params::getColors()
 
 void Params::setPrimary(const char *color)
 {
-    this->colors.primary = hexToCRGB(color);
+    CRGB parsed;
+    if (!hexToCRGB(color, parsed))
+    {
+        return;
+    }
+
+    this->colors.primary = parsed;
 }
+
 void Params::setSecondary(const char *color)
 {
-    this->colors.secondary = hexToCRGB(color);
+    CRGB parsed;
+    if (!hexToCRGB(color, parsed))
+    {
+        return;
+    }
+
+    this->colors.secondary = parsed;
 }
 
 uint16_t Params::getSpeed()
@@ -30,6 +43,11 @@ uint16_t Params::getSpeed()
 }
 void Params::setSpeed(uint16_t speed)
 {
+    if (speed == 0)
+    {
+        speed = 1;
+    }
+
     this->speed = speed;
 }
 
@@ -39,6 +57,15 @@ byte Params::getLength()
 }
 void Params::setLength(byte length)
 {
+    if (length == 0)
+    {
+        length = 1;
+    }
+    else if (length > NUM_LEDS)
+    {
+        length = NUM_LEDS;
+    }
+
     this->length = length;
 }
 

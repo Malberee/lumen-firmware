@@ -39,6 +39,6 @@ extern Mode currentMode;
 
 extern unsigned long lastTime;
 
-void setCurrentMode(char *mode);
+void setCurrentMode(const char *mode);
 void showCurrentMode();
 void tick();
