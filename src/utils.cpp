@@ -86,15 +86,97 @@ bool hexToCRGB(const char *hex, CRGB &color)
   return true;
 }
 
-int8_t findIndex(const char* arr[], size_t size, const char* target) {
-    if (!target) {
-        return -1;
+int8_t findIndex(const char *arr[], size_t size, const char *target)
+{
+  if (!target)
+  {
+    return -1;
+  }
+
+  for (size_t i = 0; i < size; ++i)
+  {
+    if (strcmp(arr[i], target) == 0)
+    {
+      return static_cast<int8_t>(i);
+    }
+  }
+  return -1;
+}
+
+int splitString(char *str, char *ptrs[], byte capacity, char delimiter)
+{
+  if (!str || !ptrs || capacity == 0)
+  {
+    return -1;
+  }
+
+  int count = 0;
+  char *offset = str;
+
+  while (true)
+  {
+    if (count >= capacity)
+    {
+      return -1;
     }
 
-    for (size_t i = 0; i < size; ++i) {
-        if (strcmp(arr[i], target) == 0) {
-            return static_cast<int8_t>(i);
-        }
+    ptrs[count++] = offset;
+    offset = strchr(offset, delimiter);
+    if (offset)
+    {
+      *offset = 0;
+      offset++;
     }
-    return -1;
+    else
+      break;
+  }
+
+  return count;
+}
+
+bool parseClampedLong(const char *value, long minValue, long maxValue, long &result)
+{
+  if (!value || value[0] == '\0')
+  {
+    return false;
+  }
+
+  char *end = nullptr;
+  long parsed = strtol(value, &end, 10);
+  if (end == value || *end != '\0')
+  {
+    return false;
+  }
+
+  if (parsed < minValue)
+  {
+    parsed = minValue;
+  }
+  else if (parsed > maxValue)
+  {
+    parsed = maxValue;
+  }
+
+  result = parsed;
+  return true;
+}
+
+bool isValidLength(const char *value, byte minLength, byte maxLength)
+{
+  if (!value)
+  {
+    return false;
+  }
+
+  byte length = 0;
+  while (value[length] != '\0')
+  {
+    length++;
+    if (length > maxLength)
+    {
+      return false;
+    }
+  }
+
+  return length >= minLength;
 }

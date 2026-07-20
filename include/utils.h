@@ -5,4 +5,7 @@
 void fillLeds(CRGB color, byte start = 0, byte end = NUM_LEDS - 1);
 void rotateLeds();
 bool hexToCRGB(const char *hex, CRGB &color);
-int8_t findIndex(const char* arr[], size_t size, const char* target);
+int8_t findIndex(const char *arr[], size_t size, const char *target);
+int splitString(char *str, char *ptrs[], byte capacity, char delimiter);
+bool parseClampedLong(const char *value, long minValue, long maxValue, long &result);
+bool isValidLength(const char *value, byte minLength, byte maxLength);

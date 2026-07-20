@@ -3,6 +3,8 @@
 #include "modes.h"
 #include "params.h"
 
-int split(char *str, char *ptrs[], char delimiter);
+constexpr size_t MAX_MESSAGE_LENGTH = 160;
+constexpr byte MAX_PARAM_COUNT = 8;
+
 void parseParams(char *key, char *params);
-void parseMessage(uint8_t clientId, char* message);
+void parseMessage(char* message);
