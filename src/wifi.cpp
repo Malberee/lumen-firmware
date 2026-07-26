@@ -27,6 +27,7 @@ static void sendLocalIpToActiveClient()
 void onError(const char *error)
 {
     isConnecting = false;
+    currentMode = static_cast<Mode>(lastMode);
 
     sendToActiveClient(error);
 
@@ -42,7 +43,8 @@ void onConnect()
     currentMode = static_cast<Mode>(lastMode);
 
     sendLocalIpToActiveClient();
-
+    ws.disconnect(activeClient);
+    
     blink(SUCCESS_COLOR, 2);
     showCurrentMode();
 
