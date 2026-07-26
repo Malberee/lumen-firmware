@@ -9,6 +9,7 @@ DoubleFill::DoubleFill()
 
 void DoubleFill::initial()
 {
+    position = 0;
     fill_solid(leds, NUM_LEDS, params.getColors().secondary);
 }
 

@@ -9,6 +9,7 @@ Fill::Fill()
 
 void Fill::initial()
 {
+    position = 0;
     fill_solid(leds, NUM_LEDS, params.getColors().secondary);
 }
 
