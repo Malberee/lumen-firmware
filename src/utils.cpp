@@ -35,57 +35,6 @@ void rotateLeds()
   leds[0] = lastElement;
 }
 
-static int8_t hexDigitValue(char value)
-{
-  if (value >= '0' && value <= '9')
-  {
-    return value - '0';
-  }
-  if (value >= 'a' && value <= 'f')
-  {
-    return value - 'a' + 10;
-  }
-  if (value >= 'A' && value <= 'F')
-  {
-    return value - 'A' + 10;
-  }
-
-  return -1;
-}
-
-bool hexToCRGB(const char *hex, CRGB &color)
-{
-  if (!hex)
-  {
-    return false;
-  }
-
-  if (hex[0] == '#')
-  {
-    hex++;
-  }
-
-  for (byte i = 0; i < 6; i++)
-  {
-    if (hexDigitValue(hex[i]) < 0)
-    {
-      return false;
-    }
-  }
-
-  if (hex[6] != '\0')
-  {
-    return false;
-  }
-
-  color = CRGB(
-      (hexDigitValue(hex[0]) << 4) | hexDigitValue(hex[1]),
-      (hexDigitValue(hex[2]) << 4) | hexDigitValue(hex[3]),
-      (hexDigitValue(hex[4]) << 4) | hexDigitValue(hex[5]));
-
-  return true;
-}
-
 int8_t findIndex(const char *arr[], size_t size, const char *target)
 {
   if (!target)
@@ -134,31 +83,45 @@ int splitString(char *str, char *ptrs[], byte capacity, char delimiter)
   return count;
 }
 
-bool parseClampedLong(const char *value, long minValue, long maxValue, long &result)
+bool parseUint16(const char *str, uint16_t &value)
 {
-  if (!value || value[0] == '\0')
+  if (!str || *str == '\0')
   {
     return false;
   }
 
-  char *end = nullptr;
-  long parsed = strtol(value, &end, 10);
-  if (end == value || *end != '\0')
+  uint16_t result = 0;
+
+  while (*str)
   {
-    return false;
+    char c = *str++;
+
+    if (c < '0' || c > '9')
+    {
+      return false;
+    }
+
+    uint8_t digit = c - '0';
+
+    if (result > (UINT16_MAX - digit) / 10)
+    {
+      return false;
+    }
+
+    result = result * 10 + digit;
   }
 
-  if (parsed < minValue)
-  {
-    parsed = minValue;
-  }
-  else if (parsed > maxValue)
-  {
-    parsed = maxValue;
-  }
-
-  result = parsed;
+  value = result;
   return true;
+}
+
+uint16_t clamp(uint16_t value, uint16_t min, uint16_t max)
+{
+  if (value < min)
+    return min;
+  if (value > max)
+    return max;
+  return value;
 }
 
 bool isValidLength(const char *value, byte minLength, byte maxLength)

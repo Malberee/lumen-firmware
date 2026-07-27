@@ -17,7 +17,7 @@ Colors Params::getColors()
 
 void Params::setPrimary(const char *color)
 {
-    CRGB parsed;
+    CRGB parsed = CRGB(255, 255, 255);
     if (!hexToCRGB(color, parsed))
     {
         return;
@@ -55,7 +55,7 @@ byte Params::getLength()
 {
     return length;
 }
-void Params::setLength(byte length)
+void Params::setLength(uint16_t length)
 {
     if (length == 0)
     {

@@ -35,10 +35,83 @@ static int parseParamPairs(char *value, ParsedParam params[], byte capacity)
     return count;
 }
 
-void parseParams(char *key, char *value)
+static void handleCredentials(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCount)
+{
+    const char *ssid = nullptr;
+    const char *password = nullptr;
+
+    for (int i = 0; i < paramsCount; i++)
+    {
+        if (!strcmp(parsedParams[i].key, "ssid"))
+        {
+            ssid = parsedParams[i].value;
+        }
+        else if (strcmp(parsedParams[i].key, "pass"))
+        {
+            password = parsedParams[i].value;
+        }
+    }
+
+    if (!ssid && paramsCount >= 1)
+    {
+        ssid = parsedParams[0].value;
+    }
+    if (!password && paramsCount >= 2)
+    {
+        password = parsedParams[1].value;
+    }
+
+    if (!isValidLength(ssid, 1, 32) || !isValidLength(password, 0, 63))
+    {
+        return;
+    }
+
+    connectToWiFi(ssid, password);
+}
+
+static void handleMode(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCount)
+{
+    for (int i = 0; i < paramsCount; i++)
+    {
+        if (!strcmp(parsedParams[i].key, "name") && parsedParams[i].value[0] != '\0')
+            setCurrentMode(parsedParams[i].value);
+        else if (!strcmp(parsedParams[i].key, "pri"))
+            params.setPrimary(parsedParams[i].value);
+        else if (!strcmp(parsedParams[i].key, "sec"))
+            params.setSecondary(parsedParams[i].value);
+        else if (!strcmp(parsedParams[i].key, "spd"))
+        {
+            uint16_t speed;
+            if (parseUint16(parsedParams[i].value, speed))
+            {
+                params.setSpeed(speed);
+            }
+        }
+        else if (!strcmp(parsedParams[i].key, "lgt"))
+        {
+            uint16_t length;
+            if (parseUint16(parsedParams[i].value, length))
+            {
+                params.setLength(clamp(length, 1, NUM_LEDS));
+            }
+        }
+        else if (!strcmp(parsedParams[i].key, "bri"))
+        {
+            uint16_t brightness;
+            if (parseUint16(parsedParams[i].value, brightness))
+            {
+                FastLED.setBrightness(static_cast<uint8_t>(clamp(brightness, 0, 255)));
+            }
+        }
+    }
+    showCurrentMode();
+}
+
+static void parseParams(char *key, char *value)
 {
     ParsedParam parsedParams[MAX_PARAM_COUNT];
     int count = parseParamPairs(value, parsedParams, MAX_PARAM_COUNT);
+
     if (count < 0)
     {
         return;
@@ -46,73 +119,11 @@ void parseParams(char *key, char *value)
 
     if (!strcmp(key, "CRD"))
     {
-        const char *ssid = nullptr;
-        const char *password = nullptr;
-
-        for (int i = 0; i < count; i++)
-        {
-            if (!strcmp(parsedParams[i].key, "ssid"))
-            {
-                ssid = parsedParams[i].value;
-            }
-            else if (strcmp(parsedParams[i].key, "pass"))
-            {
-                password = parsedParams[i].value;
-            }
-        }
-
-        if (!ssid && count >= 1)
-        {
-            ssid = parsedParams[0].value;
-        }
-        if (!password && count >= 2)
-        {
-            password = parsedParams[1].value;
-        }
-
-        if (!isValidLength(ssid, 1, 32) || !isValidLength(password, 0, 63))
-        {
-            return;
-        }
-
-        connectToWiFi(ssid, password);
+        handleCredentials(parsedParams, count);
     }
     else if (!strcmp(key, "MODE"))
     {
-        for (int i = 0; i < count; i++)
-        {
-            if (!strcmp(parsedParams[i].key, "name") && parsedParams[i].value[0] != '\0')
-                setCurrentMode(parsedParams[i].value);
-            else if (!strcmp(parsedParams[i].key, "pri"))
-                params.setPrimary(parsedParams[i].value);
-            else if (!strcmp(parsedParams[i].key, "sec"))
-                params.setSecondary(parsedParams[i].value);
-            else if (!strcmp(parsedParams[i].key, "spd"))
-            {
-                long speed;
-                if (parseClampedLong(parsedParams[i].value, 1, 65535, speed))
-                {
-                    params.setSpeed(static_cast<uint16_t>(speed));
-                }
-            }
-            else if (!strcmp(parsedParams[i].key, "lgt"))
-            {
-                long length;
-                if (parseClampedLong(parsedParams[i].value, 1, NUM_LEDS, length))
-                {
-                    params.setLength(static_cast<byte>(length));
-                }
-            }
-            else if (!strcmp(parsedParams[i].key, "bri"))
-            {
-                long brightness;
-                if (parseClampedLong(parsedParams[i].value, 0, 255, brightness))
-                {
-                    FastLED.setBrightness(static_cast<uint8_t>(brightness));
-                }
-            }
-        }
-        showCurrentMode();
+        handleMode(parsedParams, count);
     }
 };
 

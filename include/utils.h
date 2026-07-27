@@ -7,5 +7,6 @@ void rotateLeds();
 bool hexToCRGB(const char *hex, CRGB &color);
 int8_t findIndex(const char *arr[], size_t size, const char *target);
 int splitString(char *str, char *ptrs[], byte capacity, char delimiter);
-bool parseClampedLong(const char *value, long minValue, long maxValue, long &result);
+bool parseUint16(const char *str, uint16_t &value);
+uint16_t clamp(uint16_t value, uint16_t min, uint16_t max);
 bool isValidLength(const char *value, byte minLength, byte maxLength);

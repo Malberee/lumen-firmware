@@ -26,7 +26,7 @@ public:
     void setSpeed(uint16_t speed);
 
     byte getLength();
-    void setLength(byte length);
+    void setLength(uint16_t length);
 
     bool getPower();
     void setPower(bool power);

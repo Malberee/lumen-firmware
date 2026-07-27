@@ -6,5 +6,4 @@
 constexpr size_t MAX_MESSAGE_LENGTH = 160;
 constexpr byte MAX_PARAM_COUNT = 8;
 
-void parseParams(char *key, char *params);
 void parseMessage(char* message);
