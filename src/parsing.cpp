@@ -35,6 +35,35 @@ static int parseParamPairs(char *value, ParsedParam params[], byte capacity)
     return count;
 }
 
+static bool parseRGB(char *str, CRGB &color)
+{
+    if (!str)
+    {
+        return false;
+    }
+
+    char *parts[3];
+    if (splitString(str, parts, 3, ',') != 3)
+    {
+        return false;
+    }
+
+    uint16_t r, g, b;
+
+    if (!parseUint16(parts[0], r) ||
+        !parseUint16(parts[1], g) ||
+        !parseUint16(parts[2], b))
+    {
+        return false;
+    }
+
+    color.r = static_cast<uint8_t>(clamp(r, 0, 255));
+    color.g = static_cast<uint8_t>(clamp(g, 0, 255));
+    color.b = static_cast<uint8_t>(clamp(b, 0, 255));
+
+    return true;
+}
+
 static void handleCredentials(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCount)
 {
     const char *ssid = nullptr;
@@ -71,14 +100,16 @@ static void handleCredentials(ParsedParam parsedParams[MAX_PARAM_COUNT], int par
 
 static void handleMode(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCount)
 {
+    CRGB color;
+
     for (int i = 0; i < paramsCount; i++)
     {
         if (!strcmp(parsedParams[i].key, "name") && parsedParams[i].value[0] != '\0')
             setCurrentMode(parsedParams[i].value);
-        else if (!strcmp(parsedParams[i].key, "pri"))
-            params.setPrimary(parsedParams[i].value);
-        else if (!strcmp(parsedParams[i].key, "sec"))
-            params.setSecondary(parsedParams[i].value);
+        else if (!strcmp(parsedParams[i].key, "pri") && parseRGB(parsedParams[i].value, color))
+            params.setPrimary(color);
+        else if (!strcmp(parsedParams[i].key, "sec") && parseRGB(parsedParams[i].value, color))
+            params.setSecondary(color);
         else if (!strcmp(parsedParams[i].key, "spd"))
         {
             uint16_t speed;

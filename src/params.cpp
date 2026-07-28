@@ -15,26 +15,14 @@ Colors Params::getColors()
     return colors;
 }
 
-void Params::setPrimary(const char *color)
+void Params::setPrimary(const CRGB &color)
 {
-    CRGB parsed = CRGB(255, 255, 255);
-    if (!hexToCRGB(color, parsed))
-    {
-        return;
-    }
-
-    this->colors.primary = parsed;
+    this->colors.primary = color;
 }
 
-void Params::setSecondary(const char *color)
+void Params::setSecondary(const CRGB &color)
 {
-    CRGB parsed;
-    if (!hexToCRGB(color, parsed))
-    {
-        return;
-    }
-
-    this->colors.secondary = parsed;
+    this->colors.secondary = color;
 }
 
 uint16_t Params::getSpeed()

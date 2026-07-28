@@ -19,8 +19,8 @@ public:
     Params();
 
     Colors getColors();
-    void setPrimary(const char *color);
-    void setSecondary(const char *color);
+    void setPrimary(const CRGB &color);
+    void setSecondary(const CRGB &color);
 
     uint16_t getSpeed();
     void setSpeed(uint16_t speed);
