@@ -11,7 +11,7 @@ struct Colors
 class Params
 {
     Colors colors;
-    uint16_t speed;
+    uint16_t frameInterval;
     byte length;
     bool power;
 
@@ -22,8 +22,8 @@ public:
     void setPrimary(const CRGB &color);
     void setSecondary(const CRGB &color);
 
-    uint16_t getSpeed();
-    void setSpeed(uint16_t speed);
+    uint16_t getFrameInterval();
+    void setFrameInterval(uint16_t frameInterval);
 
     byte getLength();
     void setLength(uint16_t length);

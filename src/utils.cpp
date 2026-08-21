@@ -115,6 +115,19 @@ bool parseUint16(const char *str, uint16_t &value)
   return true;
 }
 
+bool parseUint8(const char *str, uint8_t &value)
+{
+  uint16_t parsed;
+
+  if (!parseUint16(str, parsed) || parsed > UINT8_MAX)
+  {
+    return false;
+  }
+
+  value = static_cast<uint8_t>(parsed);
+  return true;
+}
+
 uint16_t clamp(uint16_t value, uint16_t min, uint16_t max)
 {
   if (value < min)
@@ -142,4 +155,13 @@ bool isValidLength(const char *value, byte minLength, byte maxLength)
   }
 
   return length >= minLength;
+}
+
+float speedToInterval(uint8_t speed, float minInterval, float maxInterval)
+{
+
+  float t = speed / 100.0f;
+
+  return maxInterval *
+         pow(minInterval / maxInterval, t);
 }

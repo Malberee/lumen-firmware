@@ -18,9 +18,24 @@ enum Mode
 class BaseMode
 {
 public:
+    BaseMode(
+        uint16_t minFrameInterval = 10,
+        uint16_t maxFrameInterval = 1000)
+        : minFrameInterval(minFrameInterval),
+          maxFrameInterval(maxFrameInterval)
+    {
+    }
+
     virtual void initial() = 0;
     virtual void tick() {};
     virtual ~BaseMode() = default;
+
+    uint16_t getMinFrameInterval() const;
+    uint16_t getMaxFrameInterval() const;
+
+protected:
+    uint16_t minFrameInterval;
+    uint16_t maxFrameInterval;
 };
 
 extern CRGB leds[NUM_LEDS];

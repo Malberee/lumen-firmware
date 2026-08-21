@@ -1,8 +1,9 @@
 #include "modes.h"
 
-Chroma::Chroma() {
+Chroma::Chroma() : BaseMode(5, 500)
+{
     hue = 0;
-}
+};
 
 void Chroma::initial()
 {

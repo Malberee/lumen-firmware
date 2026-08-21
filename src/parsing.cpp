@@ -3,6 +3,7 @@
 #include "params.h"
 #include "blink.h"
 #include "utils.h"
+#include "modes.h"
 
 struct ParsedParam
 {
@@ -48,18 +49,18 @@ static bool parseRGB(char *str, CRGB &color)
         return false;
     }
 
-    uint16_t r, g, b;
+    uint8_t r, g, b;
 
-    if (!parseUint16(parts[0], r) ||
-        !parseUint16(parts[1], g) ||
-        !parseUint16(parts[2], b))
+    if (!parseUint8(parts[0], r) ||
+        !parseUint8(parts[1], g) ||
+        !parseUint8(parts[2], b))
     {
         return false;
     }
 
-    color.r = static_cast<uint8_t>(clamp(r, 0, 255));
-    color.g = static_cast<uint8_t>(clamp(g, 0, 255));
-    color.b = static_cast<uint8_t>(clamp(b, 0, 255));
+    color.r = r;
+    color.g = g;
+    color.b = b;
 
     return true;
 }
@@ -112,10 +113,12 @@ static void handleMode(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCoun
             params.setSecondary(color);
         else if (!strcmp(parsedParams[i].key, "spd"))
         {
-            uint16_t speed;
-            if (parseUint16(parsedParams[i].value, speed))
+            uint8_t speed;
+            if (parseUint8(parsedParams[i].value, speed))
             {
-                params.setSpeed(speed);
+                float minInterval = modes[currentMode]->getMinFrameInterval();
+                float maxInterval = modes[currentMode]->getMaxFrameInterval();
+                params.setFrameInterval(speedToInterval(speed, minInterval, maxInterval));
             }
         }
         else if (!strcmp(parsedParams[i].key, "lgt"))
@@ -128,10 +131,10 @@ static void handleMode(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCoun
         }
         else if (!strcmp(parsedParams[i].key, "bri"))
         {
-            uint16_t brightness;
-            if (parseUint16(parsedParams[i].value, brightness))
+            uint8_t brightness;
+            if (parseUint8(parsedParams[i].value, brightness))
             {
-                FastLED.setBrightness(static_cast<uint8_t>(clamp(brightness, 0, 255)));
+                FastLED.setBrightness(brightness);
             }
         }
     }

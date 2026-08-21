@@ -3,7 +3,7 @@
 
 #define MAX_BRIGHTNESS 100.0
 
-Fade::Fade()
+Fade::Fade() : BaseMode(5, 500)
 {
     brightness = MAX_BRIGHTNESS;
     increase = false;

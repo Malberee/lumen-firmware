@@ -5,7 +5,7 @@ Params::Params()
 {
     colors.primary = CRGB::White;
     colors.secondary = CRGB::Black;
-    speed = 100;
+    frameInterval = 100;
     length = 3;
     power = true;
 }
@@ -25,18 +25,18 @@ void Params::setSecondary(const CRGB &color)
     this->colors.secondary = color;
 }
 
-uint16_t Params::getSpeed()
+uint16_t Params::getFrameInterval()
 {
-    return speed;
+    return frameInterval;
 }
-void Params::setSpeed(uint16_t speed)
+void Params::setFrameInterval(uint16_t frameInterval)
 {
-    if (speed == 0)
+    if (frameInterval == 0)
     {
-        speed = 1;
+        frameInterval = 1;
     }
 
-    this->speed = speed;
+    this->frameInterval = frameInterval;
 }
 
 byte Params::getLength()

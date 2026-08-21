@@ -1,6 +1,6 @@
 #include "modes.h"
 
-Rainbow::Rainbow()
+Rainbow::Rainbow() : BaseMode(5, 500)
 {
     hue = 0;
 }

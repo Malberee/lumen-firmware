@@ -3,6 +3,7 @@
 class Chroma : public BaseMode
 {
     byte hue;
+
 public:
     Chroma();
     void initial() override;
