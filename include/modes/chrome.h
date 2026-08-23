@@ -1,13 +1,13 @@
 #pragma once
 
-class Chroma : public BaseMode
+class Chrome : public BaseMode
 {
     byte hue;
 
 public:
-    Chroma();
+    Chrome();
     void initial() override;
     void tick() override;
 };
 
-extern Chroma chroma;
+extern Chrome chrome;

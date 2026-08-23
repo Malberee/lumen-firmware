@@ -11,7 +11,7 @@ enum Mode
     DOUBLE_SNAKE,
     FILL,
     DOUBLE_FILL,
-    CHROMA,
+    CHROME,
     RAINBOW
 };
 
@@ -49,7 +49,7 @@ extern Mode currentMode;
 #include "modes/double-snake.h"
 #include "modes/fill.h"
 #include "modes/double-fill.h"
-#include "modes/chroma.h"
+#include "modes/chrome.h"
 #include "modes/rainbow.h"
 
 extern unsigned long lastTime;

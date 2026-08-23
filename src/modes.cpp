@@ -3,7 +3,7 @@
 #include "utils.h"
 
 CRGB leds[NUM_LEDS];
-BaseMode *modes[] = {&solid, &fade, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chroma, &rainbow};
+BaseMode *modes[] = {&solid, &fade, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chrome, &rainbow};
 Mode currentMode = SOLID;
 
 uint16_t BaseMode::getMinFrameInterval() const
