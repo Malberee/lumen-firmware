@@ -5,7 +5,7 @@
 enum Mode
 {
     SOLID,
-    FADE,
+    BREATHING,
     CAROUSEL,
     SNAKE,
     DOUBLE_SNAKE,
@@ -42,7 +42,7 @@ extern CRGB leds[NUM_LEDS];
 extern BaseMode *modes[];
 extern Mode currentMode;
 
-#include "modes/fade.h"
+#include "modes/breathing.h"
 #include "modes/carousel.h"
 #include "modes/solid.h"
 #include "modes/snake.h"

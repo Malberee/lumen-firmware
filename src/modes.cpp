@@ -3,7 +3,7 @@
 #include "utils.h"
 
 CRGB leds[NUM_LEDS];
-BaseMode *modes[] = {&solid, &fade, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chrome, &rainbow};
+BaseMode *modes[] = {&solid, &breathing, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chrome, &rainbow};
 Mode currentMode = SOLID;
 
 uint16_t BaseMode::getMinFrameInterval() const
@@ -20,7 +20,7 @@ unsigned long lastTime = 0;
 
 void setCurrentMode(const char *mode)
 {
-    const char *modeNames[] = {"solid", "fade", "carousel", "snake", "double-snake", "fill", "double-fill", "chrome", "rainbow"};
+    const char *modeNames[] = {"solid", "breathing", "carousel", "snake", "double-snake", "fill", "double-fill", "chrome", "rainbow"};
     int8_t index = findIndex(modeNames, sizeof(modeNames) / sizeof(modeNames[0]), mode);
 
     if (index < 0)

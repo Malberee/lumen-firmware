@@ -61,7 +61,7 @@ void connectToWiFi(const char *ssid, const char *password)
     isConnecting = true;
     lastMode = currentMode;
 
-    setCurrentMode("fade");
+    setCurrentMode("breathing");
 
     WiFi.mode(WIFI_AP_STA);
     WiFi.disconnect();

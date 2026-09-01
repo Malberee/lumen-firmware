@@ -3,18 +3,18 @@
 
 #define MAX_BRIGHTNESS 100.0
 
-Fade::Fade() : BaseMode(5, 500)
+Breathing::Breathing() : BaseMode(5, 500)
 {
     brightness = MAX_BRIGHTNESS;
     increase = false;
 }
 
-void Fade::initial()
+void Breathing::initial()
 {
     fill_solid(leds, NUM_LEDS, params.getColors().primary);
 }
 
-void Fade::tick()
+void Breathing::tick()
 {
     if (brightness >= MAX_BRIGHTNESS)
     {
@@ -41,4 +41,4 @@ void Fade::tick()
     fill_solid(leds, NUM_LEDS, CRGB(color.r * scale, color.g * scale, color.b * scale));
 }
 
-Fade fade;
+Breathing breathing;
