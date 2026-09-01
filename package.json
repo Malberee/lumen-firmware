@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "gen-gamma": "node tools/generate-gamma.js"
+    }
+}
