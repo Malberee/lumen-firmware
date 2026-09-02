@@ -1,44 +1,53 @@
 #include "modes.h"
 #include "params.h"
+#include "gamma_table.h"
 
-#define MAX_BRIGHTNESS 100.0
-
-Breathing::Breathing() : BaseMode(5, 500)
+Breathing::Breathing() : BaseMode(1, 50)
 {
-    brightness = MAX_BRIGHTNESS;
-    increase = false;
 }
 
 void Breathing::initial()
 {
-    fill_solid(leds, NUM_LEDS, params.getColors().primary);
+    brightness = 0;
+    increasing = true;
+
+    CRGB color = params.getColors().primary;
+    color.nscale8(gammaTable[brightness]);
+
+    fill_solid(leds, NUM_LEDS, color);
 }
 
 void Breathing::tick()
 {
-    if (brightness >= MAX_BRIGHTNESS)
+    if (increasing)
     {
-        increase = false;
-    }
-    else if (brightness <= 0)
-    {
-        increase = true;
-    }
-
-    if (increase)
-    {
-
-        brightness++;
+        if (brightness == 255)
+        {
+            increasing = false;
+            brightness--;
+        }
+        else
+        {
+            brightness++;
+        }
     }
     else
     {
-        brightness--;
+        if (brightness == 0)
+        {
+            increasing = true;
+            brightness++;
+        }
+        else
+        {
+            brightness--;
+        }
     }
 
-    float scale = brightness / MAX_BRIGHTNESS;
     CRGB color = params.getColors().primary;
+    color.nscale8(gammaTable[brightness]);
 
-    fill_solid(leds, NUM_LEDS, CRGB(color.r * scale, color.g * scale, color.b * scale));
+    fill_solid(leds, NUM_LEDS, color);
 }
 
 Breathing breathing;

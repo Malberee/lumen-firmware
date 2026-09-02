@@ -3,7 +3,7 @@
 class Breathing : public BaseMode
 {
     byte brightness;
-    bool increase;
+    bool increasing;
 public:
     Breathing();
     void initial() override;
