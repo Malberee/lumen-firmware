@@ -22,6 +22,8 @@ const content = `#pragma once
 
 #include <stdint.h>
 
+// GENERATED GAMMA ${gamma}
+
 constexpr uint8_t gammaTable[256] = {
 ${rows.join("\n")}
 };
