@@ -1,15 +1,10 @@
 #include "modes.h"
 #include "params.h"
 
-Fill::Fill()
-{
-    position = 0;
-    reverse = false;
-}
-
 void Fill::initial()
 {
     position = 0;
+    reverse = false;
     fill_solid(leds, NUM_LEDS, params.getColors().secondary);
 }
 

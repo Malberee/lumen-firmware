@@ -1,15 +1,10 @@
 #include "modes.h"
 #include "params.h"
 
-DoubleFill::DoubleFill()
-{
-    position = 0;
-    reverse = false;
-}
-
 void DoubleFill::initial()
 {
     position = 0;
+    reverse = false;
     fill_solid(leds, NUM_LEDS, params.getColors().secondary);
 }
 
