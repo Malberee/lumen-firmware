@@ -10,13 +10,18 @@ struct Colors
 
 class Params
 {
+    uint16_t ledCount;
     Colors colors;
     uint16_t frameInterval;
     byte length;
+    byte brightness;
     bool power;
 
 public:
     Params();
+
+    uint16_t getLedCount();
+    void setLedCount(uint16_t frameInterval);
 
     Colors getColors();
     void setPrimary(const CRGB &color);
@@ -24,6 +29,9 @@ public:
 
     uint16_t getFrameInterval();
     void setFrameInterval(uint16_t frameInterval);
+
+    byte getBrightness();
+    void setBrightness(byte brightness);
 
     byte getLength();
     void setLength(uint16_t length);

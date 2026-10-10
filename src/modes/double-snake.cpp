@@ -5,14 +5,17 @@
 void DoubleSnake::initial()
 {
     byte length = params.getLength();
-    if (length > NUM_LEDS / 2)
+    uint16_t ledCount = params.getLedCount();
+    Colors colors = params.getColors();
+
+    if (length > ledCount / 2)
     {
-        length = NUM_LEDS / 2;
+        length = ledCount / 2;
     }
 
-    fillLeds(params.getColors().secondary);
-    fillLeds(params.getColors().primary, 0, length - 1);
-    fillLeds(params.getColors().primary, NUM_LEDS / 2, NUM_LEDS / 2 + length - 1);
+    fillLeds(colors.secondary);
+    fillLeds(colors.primary, 0, length - 1);
+    fillLeds(colors.primary, ledCount / 2, ledCount / 2 + length - 1);
 }
 
 void DoubleSnake::tick()

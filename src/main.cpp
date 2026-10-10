@@ -16,9 +16,8 @@ void setup()
   ws.begin();
   ws.onEvent(onWebSocketEvent);
 
-  FastLED.addLeds<NEOPIXEL, PIN>(leds, NUM_LEDS);
-  FastLED.setBrightness(10);
-  
+  controller = &FastLED.addLeds<NEOPIXEL, PIN>(leds, MAX_LEDS);
+
   blink(NEUTRAL_COLOR, 2);
   showCurrentMode();
 }

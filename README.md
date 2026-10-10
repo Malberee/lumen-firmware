@@ -11,6 +11,7 @@ The firmware controls an addressable LED strip and provides a WebSocket interfac
 - WebSocket-based communication
 - Wi-Fi provisioning through the mobile application
 - Automatic switching between access point and station modes
+- LED strip length configuration through the mobile application
 - Gamma-corrected brightness control
 - Connection status indication using the LED strip
 
@@ -21,32 +22,29 @@ The firmware currently targets:
 - **ESP8266 NodeMCU**
 - **WS2812/NeoPixel-compatible addressable LED strip**
 
-The default configuration is:
-
-- 24 LEDs
-- LED data pin: GPIO 12
-- Access point SSID: `Lumen`
-- Access point password: `12345678`
+The default configuration supports up to 300 LEDs. The actual number of LEDs can be configured through the Lumen mobile application, so the strip does not need to contain exactly 300 LEDs.
 
 ## Configuration
 
 Hardware and access point settings can be changed in [`include/config.h`](https://github.com/Malberee/lumen-firmware/blob/main/include/config.h).
 
-The following definitions should be adjusted when using different hardware or access point credentials:
+The following definitions can be adjusted when using different hardware or access point credentials:
 
 ```cpp
-#define NUM_LEDS 24
+#define MAX_LEDS 300
 #define PIN 12
 #define AP_SSID "Lumen"
 #define AP_PASSWORD "12345678"
 ```
 
-- `NUM_LEDS` — number of LEDs in the strip
-- `PIN` — ESP8266 GPIO pin connected to the LED data line
-- `AP_SSID` — Wi-Fi network name created by the controller
-- `AP_PASSWORD` — password for the controller's Wi-Fi access point
+- `MAX_LEDS` — maximum number of LEDs supported by the firmware. Increase this value if the physical strip contains more LEDs than the configured limit.
+- `PIN` — ESP8266 GPIO pin connected to the LED data line.
+- `AP_SSID` — Wi-Fi network name created by the controller.
+- `AP_PASSWORD` — password for the controller's Wi-Fi access point.
 
-These values are compiled into the firmware, so the firmware must be rebuilt and flashed after changing them.
+The actual number of LEDs is configured separately through the Lumen mobile application. It can be lower than `MAX_LEDS` and does not require rebuilding the firmware.
+
+These configuration values are compiled into the firmware. Changes to them require rebuilding and flashing the firmware.
 
 ## Building and Flashing
 
@@ -88,7 +86,10 @@ After flashing and powering on, the controller creates the configured Wi-Fi acce
 3. Use the Lumen mobile application to connect to the controller.
 4. Configure the Wi-Fi network that the controller should join.
 5. After a successful connection, the controller switches to Wi-Fi station mode.
-6. The mobile application can then communicate with the controller over the local network using WebSockets.
+6. Configure the actual number of LEDs through the mobile application by adjusting the LED count and observing the strip's visual indicator.
+7. Control the LED strip through the mobile application over the local network using WebSockets.
+
+The configured LED count must not exceed `MAX_LEDS` (300 by default). If the physical strip contains more LEDs than the firmware supports, increase `MAX_LEDS` in `include/config.h`, rebuild the firmware, and flash it again.
 
 The LED strip provides visual feedback during connection and configuration.
 

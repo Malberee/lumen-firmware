@@ -126,7 +126,16 @@ static void handleMode(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCoun
             uint16_t length;
             if (parseUint16(parsedParams[i].value, length))
             {
-                params.setLength(clamp(length, 1, NUM_LEDS));
+                uint16_t clampedLength = clamp(length, 1, MAX_LEDS);
+
+                if (currentMode == LED_COUNT_SETUP)
+                {
+                    params.setLedCount(clampedLength);
+                }
+                else
+                {
+                    params.setLength(clampedLength);
+                }
             }
         }
         else if (!strcmp(parsedParams[i].key, "bri"))
@@ -134,7 +143,7 @@ static void handleMode(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCoun
             uint8_t brightness;
             if (parseUint8(parsedParams[i].value, brightness))
             {
-                FastLED.setBrightness(brightness);
+                params.setBrightness(brightness);
             }
         }
     }

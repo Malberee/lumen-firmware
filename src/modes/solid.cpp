@@ -3,7 +3,7 @@
 
 void Solid::initial()
 {
-    fill_solid(leds, NUM_LEDS, params.getColors().primary);
+    fill_solid(leds, params.getLedCount(), params.getColors().primary);
 }
 
 Solid solid;

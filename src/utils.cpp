@@ -1,15 +1,19 @@
 #include "utils.h"
+#include "config.h"
+#include "params.h"
 
-void fillLeds(CRGB color, byte start, byte end)
+void fillLeds(CRGB color, uint16_t start, uint16_t end)
 {
-  if (start >= NUM_LEDS)
+  uint16_t ledCount = params.getLedCount();
+
+  if (start >= ledCount)
   {
     return;
   }
 
-  if (end >= NUM_LEDS)
+  if (end >= ledCount)
   {
-    end = NUM_LEDS - 1;
+    end = ledCount - 1;
   }
 
   if (end < start)
@@ -25,9 +29,10 @@ void fillLeds(CRGB color, byte start, byte end)
 
 void rotateLeds()
 {
-  CRGB lastElement = leds[NUM_LEDS - 1];
+  uint16_t ledCount = params.getLedCount();
+  CRGB lastElement = leds[ledCount - 1];
 
-  for (size_t i = NUM_LEDS - 1; i > 0; i--)
+  for (size_t i = ledCount - 1; i > 0; i--)
   {
     leds[i] = leds[i - 1];
   }
@@ -164,4 +169,9 @@ float speedToInterval(uint8_t speed, float minInterval, float maxInterval)
 
   return maxInterval *
          pow(minInterval / maxInterval, t);
+}
+
+void showLeds()
+{
+  controller->show(leds, params.getLedCount(), params.getBrightness());
 }

@@ -7,7 +7,9 @@
 #include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
 
-#define NUM_LEDS 24
+#define MIN_LEDS 2 // Do not touch this
+
+#define MAX_LEDS 300
 #define PIN 12
 
 #define AP_SSID "Lumen"

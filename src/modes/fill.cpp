@@ -5,7 +5,7 @@ void Fill::initial()
 {
     position = 0;
     reverse = false;
-    fill_solid(leds, NUM_LEDS, params.getColors().secondary);
+    fill_solid(leds, params.getLedCount(), params.getColors().secondary);
 }
 
 void Fill::tick()
@@ -19,11 +19,13 @@ void Fill::tick()
         leds[position] = params.getColors().primary;
     }
 
-    if (position >= NUM_LEDS - 1)
+    if (position >= params.getLedCount() - 1)
     {
         reverse = !reverse;
         position = 0;
-    } else {
+    }
+    else
+    {
         position++;
     }
 }
