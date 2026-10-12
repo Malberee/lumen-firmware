@@ -3,11 +3,13 @@
 
 Params::Params()
 {
+    brightness = 40;
     colors.primary = CRGB::White;
     colors.secondary = CRGB::Black;
     frameInterval = 100;
     length = 3;
     power = true;
+    ledCount = MIN_LEDS;
 }
 
 Colors Params::getColors()
@@ -49,9 +51,9 @@ void Params::setLength(uint16_t length)
     {
         length = 1;
     }
-    else if (length > NUM_LEDS)
+    else if (length > this->getLedCount())
     {
-        length = NUM_LEDS;
+        length = this->getLedCount();
     }
 
     this->length = length;
@@ -72,8 +74,33 @@ void Params::setPower(bool power)
     else
     {
         FastLED.clear(true);
-        FastLED.show();
+        showLeds();
     }
 }
+
+uint16_t Params::getLedCount()
+{
+    return ledCount;
+}
+void Params::setLedCount(uint16_t ledCount)
+{
+    if (ledCount < MIN_LEDS)
+    {
+        this->ledCount = MIN_LEDS;
+    }
+    else
+    {
+        this->ledCount = ledCount;
+    }
+};
+
+byte Params::getBrightness()
+{
+    return brightness;
+}
+void Params::setBrightness(byte brightness)
+{
+    this->brightness = brightness;
+};
 
 Params params;

@@ -12,7 +12,8 @@ enum Mode
     FILL,
     DOUBLE_FILL,
     CHROME,
-    RAINBOW
+    RAINBOW,
+    LED_COUNT_SETUP
 };
 
 class BaseMode
@@ -38,9 +39,10 @@ protected:
     uint16_t maxFrameInterval;
 };
 
-extern CRGB leds[NUM_LEDS];
+extern CRGB leds[MAX_LEDS];
 extern BaseMode *modes[];
 extern Mode currentMode;
+extern CLEDController *controller;
 
 #include "modes/breathing.h"
 #include "modes/carousel.h"
@@ -51,6 +53,7 @@ extern Mode currentMode;
 #include "modes/double-fill.h"
 #include "modes/chrome.h"
 #include "modes/rainbow.h"
+#include "modes/led_count_setup.h"
 
 extern unsigned long lastTime;
 

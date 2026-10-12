@@ -1,4 +1,5 @@
 #include "modes.h"
+#include "params.h"
 
 Rainbow::Rainbow() : BaseMode(5, 500)
 {
@@ -7,13 +8,13 @@ Rainbow::Rainbow() : BaseMode(5, 500)
 
 void Rainbow::initial()
 {
-    fill_rainbow_circular(leds, NUM_LEDS, hue);
+    fill_rainbow_circular(leds, params.getLedCount(), hue);
 }
 
 void Rainbow::tick()
 {
     hue++;
-    fill_rainbow_circular(leds, NUM_LEDS, hue);
+    fill_rainbow_circular(leds, params.getLedCount(), hue);
 }
 
 Rainbow rainbow;

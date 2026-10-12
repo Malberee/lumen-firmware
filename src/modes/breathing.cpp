@@ -14,7 +14,7 @@ void Breathing::initial()
     CRGB color = params.getColors().primary;
     color.nscale8(gammaTable[brightness]);
 
-    fill_solid(leds, NUM_LEDS, color);
+    fill_solid(leds, params.getLedCount(), color);
 }
 
 void Breathing::tick()
@@ -47,7 +47,7 @@ void Breathing::tick()
     CRGB color = params.getColors().primary;
     color.nscale8(gammaTable[brightness]);
 
-    fill_solid(leds, NUM_LEDS, color);
+    fill_solid(leds, params.getLedCount(), color);
 }
 
 Breathing breathing;

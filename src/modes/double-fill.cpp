@@ -5,23 +5,25 @@ void DoubleFill::initial()
 {
     position = 0;
     reverse = false;
-    fill_solid(leds, NUM_LEDS, params.getColors().secondary);
+    fill_solid(leds, params.getLedCount(), params.getColors().secondary);
 }
 
 void DoubleFill::tick()
 {
+    uint16_t ledCount = params.getLedCount();
+
     if (reverse)
     {
         leds[position] = params.getColors().secondary;
-        leds[NUM_LEDS - 1 - position] = params.getColors().secondary;
+        leds[ledCount - 1 - position] = params.getColors().secondary;
     }
     else
     {
         leds[position] = params.getColors().primary;
-        leds[NUM_LEDS - 1 - position] = params.getColors().primary;
+        leds[ledCount - 1 - position] = params.getColors().primary;
     }
 
-    if (position >= NUM_LEDS / 2 - 1)
+    if (position >= ledCount / 2 - 1)
     {
         reverse = !reverse;
         position = 0;

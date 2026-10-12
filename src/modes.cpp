@@ -2,9 +2,10 @@
 #include "params.h"
 #include "utils.h"
 
-CRGB leds[NUM_LEDS];
-BaseMode *modes[] = {&solid, &breathing, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chrome, &rainbow};
-Mode currentMode = SOLID;
+CRGB leds[MAX_LEDS];
+BaseMode *modes[] = {&solid, &breathing, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chrome, &rainbow, &ledCountSetup};
+Mode currentMode = LED_COUNT_SETUP;
+CLEDController *controller;
 
 uint16_t BaseMode::getMinFrameInterval() const
 {
@@ -20,7 +21,7 @@ unsigned long lastTime = 0;
 
 void setCurrentMode(const char *mode)
 {
-    const char *modeNames[] = {"solid", "breathing", "carousel", "snake", "double-snake", "fill", "double-fill", "chrome", "rainbow"};
+    const char *modeNames[] = {"solid", "breathing", "carousel", "snake", "double-snake", "fill", "double-fill", "chrome", "rainbow", "led-count-setup"};
     int8_t index = findIndex(modeNames, sizeof(modeNames) / sizeof(modeNames[0]), mode);
 
     if (index < 0)
@@ -35,8 +36,8 @@ void showCurrentMode()
     modes[currentMode]->initial();
     if (params.getPower())
     {
-        FastLED.show();
-        FastLED.show(); // for some unknown reason color change does not work after the first call 🤷‍♂️
+        showLeds();
+        showLeds(); // for some unknown reason color change does not work after the first call 🤷‍♂️
     }
 }
 
@@ -51,7 +52,7 @@ void tick()
         {
             lastTime = millis();
             modes[currentMode]->tick();
-            FastLED.show();
+            showLeds();
         }
     }
 }

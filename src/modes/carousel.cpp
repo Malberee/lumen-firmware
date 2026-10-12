@@ -8,7 +8,7 @@ Carousel::Carousel() : BaseMode(50, 2000)
 
 void Carousel::initial()
 {
-    for (byte i = 0; i < NUM_LEDS; i++)
+    for (byte i = 0; i < params.getLedCount(); i++)
     {
         leds[i] = i % 2 ? params.getColors().primary : params.getColors().secondary;
     }
