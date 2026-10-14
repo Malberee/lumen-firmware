@@ -1,9 +1,10 @@
 #include "params.h"
 #include "modes.h"
+#include "gamma_table.h"
 
 Params::Params()
 {
-    brightness = 40;
+    brightness = 128;
     colors.primary = CRGB::White;
     colors.secondary = CRGB::Black;
     frameInterval = 100;
@@ -96,11 +97,12 @@ void Params::setLedCount(uint16_t ledCount)
 
 byte Params::getBrightness()
 {
-    return brightness;
+    return gammaTable[brightness];
 }
+
 void Params::setBrightness(byte brightness)
 {
     this->brightness = brightness;
-};
+}
 
 Params params;
