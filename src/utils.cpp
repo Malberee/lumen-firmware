@@ -173,5 +173,6 @@ float speedToInterval(uint8_t speed, float minInterval, float maxInterval)
 
 void showLeds()
 {
+  // FastLED.setBrightness(params.getBrightness());
   controller->show(leds, params.getLedCount(), params.getBrightness());
 }

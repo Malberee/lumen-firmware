@@ -138,20 +138,24 @@ static void handleMode(ParsedParam parsedParams[MAX_PARAM_COUNT], int paramsCoun
                 }
             }
         }
-        else if (!strcmp(parsedParams[i].key, "bri"))
-        {
-            uint8_t brightness;
-            if (parseUint8(parsedParams[i].value, brightness))
-            {
-                params.setBrightness(brightness);
-            }
-        }
     }
     showCurrentMode();
 }
 
 static void parseParams(char *key, char *value)
 {
+    if (!strcmp(key, "BRI"))
+    {
+        uint8_t brightness;
+        if (parseUint8(value, brightness))
+        {
+            params.setBrightness(brightness);
+            showLeds();
+        }
+
+        return;
+    }
+
     ParsedParam parsedParams[MAX_PARAM_COUNT];
     int count = parseParamPairs(value, parsedParams, MAX_PARAM_COUNT);
 
