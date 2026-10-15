@@ -1,7 +1,5 @@
 #pragma once
 
-#define FASTLED_ALLOW_INTERRUPTS 0
-
 #include <Arduino.h>
 #include <FastLED.h>
 #include <ESP8266WiFi.h>
