@@ -4,7 +4,7 @@
 
 CRGB leds[MAX_LEDS];
 BaseMode *modes[] = {&solid, &breathing, &carousel, &snake, &doubleSnake, &fill, &doubleFill, &chrome, &rainbow, &ledCountSetup};
-Mode currentMode = LED_COUNT_SETUP;
+Mode currentMode = SOLID;
 CLEDController *controller;
 
 uint16_t BaseMode::getMinFrameInterval() const

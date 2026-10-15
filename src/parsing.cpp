@@ -181,7 +181,7 @@ void parseMessage(char *message)
     if (!strcmp(message, "CNT"))
     {
         blink(SUCCESS_COLOR, 2);
-        showCurrentMode();
+        setCurrentMode("led-count-setup");
     }
     else if (!strcmp(message, "DSCNT"))
     {
